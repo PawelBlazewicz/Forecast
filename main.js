@@ -25,7 +25,7 @@ const getWeather = async (id) => {
             id = "q=Warszawa";
         }
     }
-    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=9&units=metric`);
+    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=12&units=metric`);
     const data = await get.json();
     return data;
 };
@@ -39,7 +39,7 @@ getWeather().then(data => {
     for (let i of data.list) {
         const p =  document.createElement("p");
         const temp = Math.round(i.main.temp)
-        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} tempertura  ${temp}°C <span style="color:blue">${'[]'.repeat(temp)}</span>`;
+        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${'[]'.repeat(Math.abs(temp))}</span>`;
         p.classList.add("temp");
         document.body.appendChild(p);       
     }
