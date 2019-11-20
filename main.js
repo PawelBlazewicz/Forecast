@@ -18,8 +18,8 @@ const getWeather = async (id) => {
     } else {
         try {
             const { coords } = await getCurrentPosition(options);
-            //cosnt {latitude, longitude} = coords;
-            id = `lat=${coords.latitude}&lon=${coords.longitude}`;
+            const {latitude, longitude} = coords;
+            id = `lat=${latitude}&lon=${longitude}`;
         } catch (error) {
             console.log(error.message);
             id = "q=Warszawa";
@@ -31,18 +31,16 @@ const getWeather = async (id) => {
 };
 
 getWeather().then(data => {
-    //console.log(data);
-
-    console.log(data.city.name);
+    console.log(data);
+    //console.log(data.city.name);
+    //console.log(`${i.dt_txt} tempertura  ${Math.round(i.main.temp)}°C`);
     document.body.innerHTML=`<h1>${data.city.name}</h1>`
 
     for (let i of data.list) {
         const p =  document.createElement("p");
-
-        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} tempertura  ${Math.round(i.main.temp)}°C`;
+        const temp = Math.round(i.main.temp)
+        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} tempertura  ${temp}°C <span style="color:blue">${'[]'.repeat(temp)}</span>`;
         p.classList.add("temp");
-        document.body.appendChild(p);
-
-        console.log(`${i.dt_txt} tempertura  ${Math.round(i.main.temp)}°C`);
+        document.body.appendChild(p);       
     }
 });
