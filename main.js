@@ -12,7 +12,7 @@ function getCurrentPosition(options = {}) {
     });
 }
 
-const getWeather = async (id) => {
+const getWeather = async id => {
     if (id) {
         id = "q=" + id;
     } else {
@@ -35,14 +35,13 @@ const getWeather = async (id) => {
     return data;
 };
 
-const makeWeatherBox = (id) => {
-    getWeather(id).then(data => {
-            console.log(data);
-            const container = document.querySelector(".container")
-            const forecast = document.createElement("div");
-            forecast.classList.add("forecast");
-            forecast.classList.add(data.city.name);
-            forecast.innerHTML = `
+const makeWeatherBox = async id => {
+    const data = await getWeather(id);
+    const container = document.querySelector(".container");
+    const forecast = document.createElement("div");
+    forecast.classList.add("forecast");
+    forecast.classList.add(data.city.name);
+    forecast.innerHTML = `
         <div class="topInfo">
             <div class="city">
                 <h1 class="cityName">${data.city.name}</h1>
@@ -51,18 +50,17 @@ const makeWeatherBox = (id) => {
                 ${Math.round(data.list[0].main.temp)}°
             </div>
         </div>`;
-            container.appendChild(forecast);
+    container.appendChild(forecast);
 
-            for (let i of data.list) {
-                const p = document.createElement("p");
-                const temp = Math.round(i.main.temp)
-                p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${'[]'.repeat(Math.abs(temp))}</span>`;
-                p.classList.add("temp");
-                forecast.appendChild(p);
-            }
-        
-
-    })
+    for (let i of data.list) {
+        const p = document.createElement("p");
+        const temp = Math.round(i.main.temp);
+        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${"[]".repeat(
+      Math.abs(temp)
+    )}</span>`;
+        p.classList.add("temp");
+        forecast.appendChild(p);
+    }
 };
 
 makeWeatherBox();
