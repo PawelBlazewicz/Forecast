@@ -30,7 +30,7 @@ const getWeather = async id => {
             id = "q=Warszawa";
         }
     }
-    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=12&units=metric`);
+    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=20&units=metric`);
     const data = await get.json();
     return data;
 };
@@ -49,17 +49,21 @@ const makeWeatherBox = async id => {
             <div class="actualTemperature">
                 ${Math.round(data.list[0].main.temp)}°
             </div>
-        </div>`;
+        </div>
+        <div class="bottomInfo"></div>`;
     container.appendChild(forecast);
 
     for (let i of data.list) {
-        const p = document.createElement("p");
+        const div = document.createElement("div");
         const temp = Math.round(i.main.temp);
-        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${"[]".repeat(
-      Math.abs(temp)
-    )}</span>`;
-        p.classList.add("temp");
-        forecast.appendChild(p);
+        const hour = /\s.{5}/.exec(i.dt_txt);
+        div.innerHTML = `
+        <div class="tempBar" style="top:${temp>0 ?50 - (temp+5) : 90}px; height:${Math.abs(temp)+5}px;"></div>
+       <div class="timeAndTemp" >${temp}°C <br> ${hour}</div>
+        `;
+        //<span style="color:blue">${"[]".repeat(  Math.abs(temp))}</span>
+        div.classList.add("temp");
+        forecast.children[1].appendChild(div);
     }
 };
 
