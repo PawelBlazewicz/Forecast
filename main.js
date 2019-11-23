@@ -34,13 +34,26 @@ getWeather().then(data => {
     console.log(data);
     //console.log(data.city.name);
     //console.log(`${i.dt_txt} tempertura  ${Math.round(i.main.temp)}°C`);
-    document.body.innerHTML=`<h1>${data.city.name}</h1>`
+    const container = document.querySelector(".container")
+    const forecast =  document.createElement("div");
+    forecast.classList.add("forecast");
+    forecast.classList.add(data.city.name);   
+    forecast.innerHTML=`
+        <div class="topInfo">
+            <div class="city">
+                <h1 class="cityName">${data.city.name}</h1>
+            </div>
+            <div class="actualTemperature">
+                ${Math.round(data.list[0].main.temp)}°
+            </div>
+        </div>`;
+    container.appendChild(forecast); 
 
     for (let i of data.list) {
         const p =  document.createElement("p");
         const temp = Math.round(i.main.temp)
         p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${'[]'.repeat(Math.abs(temp))}</span>`;
         p.classList.add("temp");
-        document.body.appendChild(p);       
+        forecast.appendChild(p);       
     }
 });

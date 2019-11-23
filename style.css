@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background-color: brown;
+    width: 100vw;
+    height: 50px;
+    position: fixed;
+    top: 0px;
+}
+
+.container {
+    position: relative;
+    top: 50px;
+}
+
+.forecast {
+    border: solid 3px blue;
+    width: 400px;
+}
+
+.cityName {
+    font-size: 60px;
+    margin: 10px;
+    word-wrap: break-word;
+}
+
+.topInfo{
+        display: flex;
+        background-color: azure;
+        width: auto;
+}
+
+.city {
+    width: 70%;
+}
+
+.actualTemperature{
+    font-size: 100px;
+    width: 40%;
+}
