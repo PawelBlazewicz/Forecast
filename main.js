@@ -17,8 +17,13 @@ const getWeather = async (id) => {
         id = "q=" + id;
     } else {
         try {
-            const { coords } = await getCurrentPosition(options);
-            const {latitude, longitude} = coords;
+            const {
+                coords
+            } = await getCurrentPosition(options);
+            const {
+                latitude,
+                longitude
+            } = coords;
             id = `lat=${latitude}&lon=${longitude}`;
         } catch (error) {
             console.log(error.message);
@@ -30,15 +35,14 @@ const getWeather = async (id) => {
     return data;
 };
 
-getWeather().then(data => {
-    console.log(data);
-    //console.log(data.city.name);
-    //console.log(`${i.dt_txt} tempertura  ${Math.round(i.main.temp)}°C`);
-    const container = document.querySelector(".container")
-    const forecast =  document.createElement("div");
-    forecast.classList.add("forecast");
-    forecast.classList.add(data.city.name);   
-    forecast.innerHTML=`
+const makeWeatherBox = (id) => {
+    getWeather(id).then(data => {
+            console.log(data);
+            const container = document.querySelector(".container")
+            const forecast = document.createElement("div");
+            forecast.classList.add("forecast");
+            forecast.classList.add(data.city.name);
+            forecast.innerHTML = `
         <div class="topInfo">
             <div class="city">
                 <h1 class="cityName">${data.city.name}</h1>
@@ -47,13 +51,18 @@ getWeather().then(data => {
                 ${Math.round(data.list[0].main.temp)}°
             </div>
         </div>`;
-    container.appendChild(forecast); 
+            container.appendChild(forecast);
 
-    for (let i of data.list) {
-        const p =  document.createElement("p");
-        const temp = Math.round(i.main.temp)
-        p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${'[]'.repeat(Math.abs(temp))}</span>`;
-        p.classList.add("temp");
-        forecast.appendChild(p);       
-    }
-});
+            for (let i of data.list) {
+                const p = document.createElement("p");
+                const temp = Math.round(i.main.temp)
+                p.innerHTML = `${/\s.{5}/.exec(i.dt_txt)} ## ${temp}°C <span style="color:blue">${'[]'.repeat(Math.abs(temp))}</span>`;
+                p.classList.add("temp");
+                forecast.appendChild(p);
+            }
+        
+
+    })
+};
+
+makeWeatherBox();
