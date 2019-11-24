@@ -15,14 +15,15 @@
 
 .container {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     position: relative;
     top: 50px;
 }
 
 .forecast {
-    border: solid 3px blue;
-    width: 400px;
+    margin: 50px;
+    width: 480px;
 }
 
 .cityName {
@@ -32,8 +33,9 @@
 }
 
 .topInfo {
+    margin: 5px;
     display: flex;
-    background-color: azure;
+    background-color: beige;
     width: auto;
 }
 
@@ -52,14 +54,17 @@
 }
 
 .temp {
+    margin: 5px;
     position: relative;
     height: 140px;
+    width: 45px;
     background-color: beige;
     flex-grow: 1;
     border: 1px solid;
     text-align: center;
 }
 .timeAndTemp{
+    font-size: 18px;
     height: 40px;
     top: 50px;
     position: relative;
@@ -69,4 +74,9 @@
     width: 100%;
     position: absolute;
     background-color: greenyellow;
+}
+
+.weatherIcon {
+    position: absolute;
+    margin: 95px -25px;
 }

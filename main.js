@@ -30,13 +30,14 @@ const getWeather = async id => {
             id = "q=Warszawa";
         }
     }
-    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=20&units=metric`);
+    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=24&units=metric&lang=pl`);
     const data = await get.json();
     return data;
 };
 
 const makeWeatherBox = async id => {
     const data = await getWeather(id);
+    console.log(data);
     const container = document.querySelector(".container");
     const forecast = document.createElement("div");
     forecast.classList.add("forecast");
@@ -45,6 +46,7 @@ const makeWeatherBox = async id => {
         <div class="topInfo">
             <div class="city">
                 <h1 class="cityName">${data.city.name}</h1>
+                <img src="http://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png" alt="${data.list[0].weather[0].description} title="${data.list[0].weather[0].description}">
             </div>
             <div class="actualTemperature">
                 ${Math.round(data.list[0].main.temp)}°
@@ -57,9 +59,11 @@ const makeWeatherBox = async id => {
         const div = document.createElement("div");
         const temp = Math.round(i.main.temp);
         const hour = /\s.{5}/.exec(i.dt_txt);
-        div.innerHTML = `
+        div.innerHTML = `       
+        <img class="weatherIcon" src="http://openweathermap.org/img/w/${i.weather[0].icon}.png" alt="${i.weather[0].description}" title="${i.weather[0].description}">
         <div class="tempBar" style="top:${temp>0 ?50 - (temp+5) : 90}px; height:${Math.abs(temp)+5}px;"></div>
-       <div class="timeAndTemp" >${temp}°C <br> ${hour}</div>
+       <div class="timeAndTemp" >${temp}°C
+       <br> ${hour}</div>
         `;
         //<span style="color:blue">${"[]".repeat(  Math.abs(temp))}</span>
         div.classList.add("temp");
@@ -68,3 +72,5 @@ const makeWeatherBox = async id => {
 };
 
 makeWeatherBox();
+
+//http://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png
