@@ -35,8 +35,9 @@
 .topInfo {
     margin: 5px;
     display: flex;
-    background-color: beige;
-    width: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid;
+    border-radius: 5px;
 }
 
 .city {
@@ -58,7 +59,8 @@
     position: relative;
     height: 140px;
     width: 45px;
-    background-color: beige;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
     flex-grow: 1;
     border: 1px solid;
     text-align: center;
@@ -79,4 +81,13 @@
 .weatherIcon {
     position: absolute;
     margin: 95px -25px;
+}
+
+.bigWeatherIcon {
+    position: absolute;
+    margin: -50px 0px 0px 0px
+}
+
+.additionalInfo{
+    margin: 10px;
 }

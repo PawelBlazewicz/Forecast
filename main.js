@@ -46,10 +46,16 @@ const makeWeatherBox = async id => {
         <div class="topInfo">
             <div class="city">
                 <h1 class="cityName">${data.city.name}</h1>
-                <img src="http://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png" alt="${data.list[0].weather[0].description} title="${data.list[0].weather[0].description}">
+                <div class="additionalInfo">
+
+                <span>💦 ${data.list[0].main.humidity}%</span> <span>💨${data.list[0].wind.speed}m/s</span>
+                <span>${data.list[0].main.pressure}hPa</span>
+                </div>
             </div>
             <div class="actualTemperature">
                 ${Math.round(data.list[0].main.temp)}°
+                <img class="bigWeatherIcon" src="http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png" alt="${data.list[0].weather[0].description}" title="${data.list[0].weather[0].description}">
+
             </div>
         </div>
         <div class="bottomInfo"></div>`;
@@ -65,12 +71,9 @@ const makeWeatherBox = async id => {
        <div class="timeAndTemp" >${temp}°C
        <br> ${hour}</div>
         `;
-        //<span style="color:blue">${"[]".repeat(  Math.abs(temp))}</span>
         div.classList.add("temp");
         forecast.children[1].appendChild(div);
     }
 };
 
 makeWeatherBox();
-
-//http://openweathermap.org/img/w/${data.list[0].weather[0].icon}.png
