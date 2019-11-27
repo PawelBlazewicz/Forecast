@@ -1,5 +1,50 @@
 const apiKey = "b5b93963b46828179a029c664178ae30";
 const url = "http://api.openweathermap.org/data/2.5/forecast?";
+const input = document.querySelector(".cities-search");
+const cityList = document.querySelector(".cities-list");
+let lis = [];
+
+const loadCityList = async () => {
+    const response = await fetch("./citylist.json");
+    const data = await response.json();
+    const cities = await data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+
+    cities.forEach((item, index) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        li.classList.add("city-li");
+        a.classList.add("city-li-name")
+        a.setAttribute("href","#");
+        cityList.appendChild(li);
+        li.appendChild(a);
+        a.textContent = item.name;
+        if(index == cities.length-1) {
+            lis = cityList.getElementsByTagName("li");
+            cityList.addEventListener("click", (e) => {
+                if(event.currentTarget != event.target){
+                    input.value = e.target.textContent;
+                    cityList.style.display = "none";
+                }
+            }, false)
+        }
+    });
+}
+
+input.addEventListener("keyup", (e) => {
+    cityList.style.display = "block";
+    let str = e.target.value.toLowerCase();
+    let count = 0;
+    for(let i = 0; i < lis.length; i++){
+        if(lis[i].textContent.toLowerCase().indexOf(str) == 0){
+            if (count < 10) {
+                lis[i].style.display = "block";
+                count++;
+            }
+        } else {
+            lis[i].style.display = "none";
+        }
+    }
+});
 
 const options = {
     timeout: 5000,
@@ -81,3 +126,4 @@ const makeWeatherBox = async id => {
 };
 
 makeWeatherBox();
+loadCityList();
