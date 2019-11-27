@@ -1,5 +1,5 @@
 const apiKey = "b5b93963b46828179a029c664178ae30";
-const API = "http://api.openweathermap.org/data/2.5/forecast?";
+const url = "http://api.openweathermap.org/data/2.5/forecast?";
 
 const options = {
     timeout: 5000,
@@ -30,7 +30,7 @@ const getWeather = async id => {
             id = "q=Warszawa";
         }
     }
-    const get = await fetch(`${API}${id}&APPID=${apiKey}&cnt=24&units=metric&lang=pl`);
+    const get = await fetch(`${url}${id}&APPID=${apiKey}&cnt=24&units=metric&lang=pl`);
     const data = await get.json();
     return data;
 };
@@ -41,7 +41,7 @@ const makeWeatherBox = async id => {
     const container = document.querySelector(".container");
     const forecast = document.createElement("div");
     forecast.classList.add("forecast");
-    forecast.classList.add(data.city.name);
+    forecast.classList.add(data.city[name]);
     forecast.innerHTML = `
         <div class="topInfo">
             <div class="city">
@@ -65,6 +65,7 @@ const makeWeatherBox = async id => {
     for (let i of data.list) {
         const div = document.createElement("div");
         const temp = Math.round(i.main.temp);
+        const tempValue = (temp >= 0) ? "positive" : "negative";
         const hour = /\s.{5}/.exec(i.dt_txt);
         div.innerHTML = `       
             <img class="weatherIcon" src="http://openweathermap.org/img/w/${i.weather[0].icon}.png" alt="${i.weather[0].description}" title="${i.weather[0].description}">
@@ -74,6 +75,7 @@ const makeWeatherBox = async id => {
             </div>
         `;
         div.classList.add("temp");
+        div.querySelector(".tempBar").classList.add(tempValue);
         forecast.children[1].appendChild(div);
     }
 };
