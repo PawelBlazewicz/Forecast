@@ -4,47 +4,41 @@ const input = document.querySelector(".cities-search");
 const cityList = document.querySelector(".cities-list");
 let lis = [];
 
-const loadCityList = async () => {
-    const response = await fetch("./citylist.json");
-    const data = await response.json();
-    const cities = await data.sort((a, b) => (a.name > b.name) ? 1 : -1);
-
-    cities.forEach((item, index) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        li.classList.add("city-li");
-        a.classList.add("city-li-name")
-        a.setAttribute("href","#");
-        cityList.appendChild(li);
-        li.appendChild(a);
-        a.textContent = item.name;
-        if(index == cities.length-1) {
-            lis = cityList.getElementsByTagName("li");
-            cityList.addEventListener("click", (e) => {
-                if(event.currentTarget != event.target){
-                    input.value = e.target.textContent;
-                    cityList.style.display = "none";
-                }
-            }, false)
-        }
-    });
-}
-
-input.addEventListener("keyup", (e) => {
-    cityList.style.display = "block";
-    let str = e.target.value.toLowerCase();
-    let count = 0;
-    for(let i = 0; i < lis.length; i++){
-        if(lis[i].textContent.toLowerCase().indexOf(str) == 0){
-            if (count < 10) {
-                lis[i].style.display = "block";
+const loadCityList = async (e) => {
+    cityList.innerHTML = "";
+    if (lis.length < 1) {
+        const response = await fetch("./citylist.json");
+        lis = await response.json();
+    }
+    if (e.target.value) {
+        let reg = RegExp("^" + e.target.value + ".*", "i");
+        let count = 0;
+        for (let i = 0; i < lis.length; i++) {
+            if (reg.test(lis[i].name)) {
+                const li = document.createElement("li");
+                const a = document.createElement("a");
+                li.classList.add("city-li");
+                a.classList.add("city-li-name")
+                a.setAttribute("href", "#");
+                cityList.appendChild(li);
+                li.appendChild(a);
+                a.textContent = lis[i].name;
                 count++;
             }
-        } else {
-            lis[i].style.display = "none";
+            if (count > 10) {
+                break;
+            }
         }
+        
     }
+}
+
+cityList.addEventListener("click", (e) => {
+        input.value = e.target.textContent;
+        cityList.innerHTML = "";
 });
+
+input.addEventListener("keyup", loadCityList);
 
 const options = {
     timeout: 5000,
@@ -110,7 +104,7 @@ const makeWeatherBox = async id => {
     for (let i of data.list) {
         const div = document.createElement("div");
         const temp = Math.round(i.main.temp);
-        const tempValue = (temp >= 0) ? "positive" : "negative";
+        const tempValue = (temp > 0) ? "positive" : "negative";
         const hour = /\s.{5}/.exec(i.dt_txt);
         div.innerHTML = `       
             <img class="weatherIcon" src="http://openweathermap.org/img/w/${i.weather[0].icon}.png" alt="${i.weather[0].description}" title="${i.weather[0].description}">
@@ -126,4 +120,3 @@ const makeWeatherBox = async id => {
 };
 
 makeWeatherBox();
-loadCityList();
