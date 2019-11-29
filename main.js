@@ -40,6 +40,13 @@ cityList.addEventListener("click", (e) => {
 
 input.addEventListener("keyup", loadCityList);
 
+document.querySelector(".btn-add").addEventListener("click", (e) => {
+    if (input.value){
+        makeWeatherBox(input.value);
+        input.value = "";
+    }    
+});
+
 const options = {
     timeout: 5000,
     maximumAge: 0
