@@ -87,7 +87,7 @@ const makeWeatherBox = async id => {
     const container = document.querySelector(".container");
     const forecast = document.createElement("div");
     forecast.classList.add("forecast");
-    forecast.classList.add(data.city[name]);
+    forecast.classList.add(data.city.name);
     forecast.innerHTML = `
         <div class="topInfo">
             <div class="city">
@@ -101,8 +101,8 @@ const makeWeatherBox = async id => {
                 </div>
             </div>
             <div class="actualTemperature">               
-                <img class="bigWeatherIcon" src="http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png" alt="${data.list[0].weather[0].description}" title="${data.list[0].weather[0].description}">
                 ${Math.round(data.list[0].main.temp)}°
+                <img class="bigWeatherIcon" src="http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png" alt="${data.list[0].weather[0].description}" title="${data.list[0].weather[0].description}">
             </div>
         </div>
         <div class="bottomInfo"></div>`;
