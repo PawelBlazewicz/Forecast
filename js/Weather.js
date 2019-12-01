@@ -1,5 +1,5 @@
 const apiKey = "b5b93963b46828179a029c664178ae30";
-const url = "http://api.openweathermap.org/data/2.5/forecast?";
+const url = "https://api.openweathermap.org/data/2.5/forecast?";
 
 const options = {
     timeout: 5000,
