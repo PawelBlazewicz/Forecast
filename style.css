@@ -175,3 +175,37 @@ body{
     margin: 5px;
     font-size: 15px;
 }
+
+@media handheld,  (max-width: 600px) {
+    .additionalInfo, .timeAndTemp {
+        font-size: 10px;
+    }
+
+    .forecast {
+        width: 300px;
+        min-width: 300px;
+    }
+
+    .temp {
+        width: 25px;
+        height: 120px;
+    }
+
+    .weatherIcon {
+        width: 30px;
+        margin: 95px -15px;
+    }
+
+    .cityName {
+        font-size: 35px;
+    }
+
+    .actualTemperature {
+        font-size: 55px;
+    }
+
+    .cities-nav {
+        width: 150px;
+    }
+
+}

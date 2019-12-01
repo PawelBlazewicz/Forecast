@@ -83,7 +83,6 @@ const getWeather = async id => {
 
 const makeWeatherBox = async id => {
     const data = await getWeather(id);
-    console.log(data);
     const container = document.querySelector(".container");
     const forecast = document.createElement("div");
     forecast.classList.add("forecast");
