@@ -33,6 +33,10 @@ const loadCityList = async (e) => {
     }
 }
 
+input.addEventListener("blur", () => {    
+    setTimeout(function(){ cityList.innerHTML = ""; }, 200);
+});
+
 cityList.addEventListener("click", (e) => {
         input.value = e.target.textContent;
         cityList.innerHTML = "";
