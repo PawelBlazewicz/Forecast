@@ -8,6 +8,7 @@
 body{
     color: white;
     background-image: url(../img/photo-1446776811953-b23d57bd21aa.jpg);
+    background-attachment: fixed;
 }
 
 .navbar {
