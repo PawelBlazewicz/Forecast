@@ -174,7 +174,7 @@ body{
     font-size: 15px;
 }
 
-@media handheld,  (max-width: 600px) {
+@media (max-width: 600px) {
     .additionalInfo, .timeAndTemp {
         font-size: 10px;
     }

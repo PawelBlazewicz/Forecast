@@ -1,4 +1,4 @@
-import getWeather from "./Weather.js";
+import getWeather from "./weather.js";
 
 export default async (id) => {
     const data = await getWeather(id);

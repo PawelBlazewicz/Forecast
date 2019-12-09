@@ -1,5 +1,5 @@
-import loadCityList from "./js/CityList.js";
-import makeWeatherBox from "./js/WeatherBox.js";
+import loadCityList from "./js/cityList.js";
+import makeWeatherBox from "./js/weatherBox.js";
 
 const input = document.querySelector(".cities-search");
 const cityList = document.querySelector(".cities-list");
